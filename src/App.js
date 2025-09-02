@@ -30,47 +30,101 @@ function App() {
     setShowDetails(true);
     setDetails(item);
   };
-  const searchCity = async () => {
-    setLoading(true);
-    const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}/${getDate()}/${getDate(
-        3
-      )}?unitGroup=us&key=SNVNZ8F7LF75WRMNAG6C7F7AS&contentType=json`,
-      { method: "GET", headers: { "content-type": "application/json" } }
-    );
-    if (!response.ok) {
-      errorRef.current.textContent = `Something Wrong : ${response.status} : ${response.statusText}`;
-      return;
-    }
-    const data = await response.json();
-    console.log(data);
-
-    setWeatherData(data);
+  const showErrorMessage = (message) => {
+    errorRef.current.textContent = message;
     setTimeout(() => {
-      setLoading(false);
+      window.location.reload();
     }, 2000);
   };
-  const locationCoords = async () => {
+  const searchCity = async () => {
     setLoading(true);
-    const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${
-        coordinates.latitude
-      }%2C${coordinates.longitude}/${getDate()}/${getDate(
-        3
-      )}?unitGroup=us&key=SNVNZ8F7LF75WRMNAG6C7F7AS&contentType=json`,
-      { method: "GET", headers: { "content-type": "application/json" } }
-    );
-    if (!response.ok) {
-      errorRef.current.textContent = `Something Wrong : ${response.status} : ${response.statusText}`;
-      return;
+    try {
+      const response = await fetch(
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}/${getDate()}/${getDate(
+          3
+        )}?unitGroup=us&key=SNVNZ8F7LF75WRMNAG6C7F7AS&contentType=json`,
+        { method: "GET", headers: { "content-type": "application/json" } }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setWeatherData(data);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+        return;
+      } else if (response.status === 400) {
+        showErrorMessage(
+          "400 BAD_REQUEST : The City you are searching for, is not valid, try to search for particular cities, not a continent or country"
+        );
+        return;
+      } else if (response.status === 401) {
+        showErrorMessage(
+          "401 UNAUTHORIZED : For this error, please contact me on my mail:harishnigam21@gmail.com"
+        );
+        return;
+      } else if (response.status === 404) {
+        showErrorMessage(
+          "404 NOT FOUND : The City you are searching for, is not valid, try to search for particular cities, not a continent or country"
+        );
+        return;
+      } else if (response.status === 429) {
+        showErrorMessage(
+          "400 TOO MANY REQUESTS : The account has exceeded its assigned limits."
+        );
+        return;
+      } else if (response.status === 500) {
+        showErrorMessage(
+          "400 INTERNAL SERVER ERROR : A general error has occurred processing the request."
+        );
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      showErrorMessage(error);
     }
-    const data = await response.json();
-    console.log(data);
-
-    setWeatherData(data);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+  };
+  const locationCoords = async () => {
+    try {
+      const response = await fetch(
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${
+          coordinates.latitude
+        }%2C${coordinates.longitude}/${getDate()}/${getDate(
+          3
+        )}?unitGroup=us&key=SNVNZ8F7LF75WRMNAG6C7F7AS&contentType=json`,
+        { method: "GET", headers: { "content-type": "application/json" } }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setWeatherData(data);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+        return;
+      } else if (response.status === 400) {
+        errorRef.current.textContent =
+          "400 BAD_REQUEST : The City you are searching for, is not valid, try to search for particular cities, not a continent or country";
+        return;
+      } else if (response.status === 401) {
+        errorRef.current.textContent =
+          "401 UNAUTHORIZED : For this error, please contact me on my mail:harishnigam21@gmail.com";
+        return;
+      } else if (response.status === 404) {
+        errorRef.current.textContent =
+          "404 NOT FOUND : The City you are searching for, is not valid, try to search for particular cities, not a continent or country";
+        return;
+      } else if (response.status === 429) {
+        errorRef.current.textContent =
+          "400 TOO MANY REQUESTS : The account has exceeded its assigned limits.";
+        return;
+      } else if (response.status === 500) {
+        errorRef.current.textContent =
+          "400 INTERNAL SERVER ERROR : A general error has occurred processing the request.";
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      errorRef.current.textContent = error;
+    }
   };
   const getLocation = async () => {
     function Location() {
@@ -99,14 +153,16 @@ function App() {
 
   useEffect(() => {
     if (coordinates?.latitude && coordinates?.longitude) {
-      console.log("Coordinates updated:", coordinates);
       locationCoords();
     }
   }, [coordinates]);
   return loading ? (
-    <section className="flex flex-col gap-8 items-center">
-      <h1>Loading...</h1>
-      <p ref={errorRef} className="text-red-600 text-4xl"></p>
+    <section className="flex flex-col gap-8 items-center w-screen h-screen justify-center">
+      <div className="flex justify-center items-center">
+        <strong className="text-xl">Loading</strong>
+        <span className="loarder"></span>
+      </div>
+      <p ref={errorRef} className="text-red-600 text-center"></p>
     </section>
   ) : (
     <section
