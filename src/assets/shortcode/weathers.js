@@ -4,8 +4,8 @@ import fog from "../GIFs/fog.gif";
 import snow from "../GIFs/snow.gif";
 import sunny from "../GIFs/sunny.gif";
 import thunderstorm from "../GIFs/Thunderstorm.gif";
-import windy from "../GIFs/windy.gif";
-import rainy from "../GIFs/rainy.gif";
+import wind from "../GIFs/windy.gif";
+import rain from "../GIFs/rain.gif";
 import { LuCloudy } from "react-icons/lu";
 import { MdSevereCold } from "react-icons/md";
 import { MdFoggy } from "react-icons/md";
@@ -39,8 +39,8 @@ export const weatherList = () => {
     },
     {
       id: 4,
-      name: "rainy",
-      image: rainy,
+      name: "rain",
+      image: rain,
       icon: IoMdRainy,
       classname: "text-4xl text-blue-300",
     },
@@ -60,17 +60,24 @@ export const weatherList = () => {
     },
     {
       id: 7,
-      name: "thunderstorm",
+      name: "thunder",
       image: thunderstorm,
       icon: IoIosThunderstorm,
       classname: "text-4xl text-gray-400",
     },
     {
       id: 8,
-      name: "windy",
-      image: windy,
+      name: "wind",
+      image: wind,
       icon: RiWindyFill,
       classname: "text-4xl text-gray-200",
+    },
+    {
+      id: 9,
+      name: "shower",
+      image: rain,
+      icon: IoMdRainy,
+      classname: "text-4xl text-blue-300",
     },
   ];
   return list;
