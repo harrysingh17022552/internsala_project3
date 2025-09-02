@@ -159,20 +159,20 @@ function App() {
   return loading ? (
     <section className="flex flex-col gap-8 items-center w-screen h-screen justify-center">
       <div className="flex justify-center items-center">
-        <strong className="text-xl">Loading</strong>
-        <span className="loarder"></span>
+        <strong className="text-xl md:text-4xl">Loading</strong>
+        <span className="loarder md:scale-150"></span>
       </div>
-      <p ref={errorRef} className="text-red-600 text-center"></p>
+      <p ref={errorRef} className="text-red-600 text-center md:text-2xl"></p>
     </section>
   ) : (
     <section
-      className={`min-w-screen min-h-screen flex flex-wrap flex-col sm:flex-row gap-10 p-4 box-border text-black`}
+      className={`max-w-screen min-h-screen flex flex-wrap flex-col sm:flex-row p-2 gap-10 box-border text-black`}
     >
       <h1 className="text-3xl sm:text-4xl md:text-5xl text-blue-800 text-center basis-full">
         Weather Forecast
       </h1>
       <article className="flex flex-col justify-center items-center w-full">
-        <div className="relative w-[98%] sm:w-[80%] md:w-[50%] flex items-center">
+        <div className="relative w-[98%] sm:w-[80%] md:w-[50%] flex items-center gap-4">
           <input
             value={city}
             type="search"
@@ -184,7 +184,7 @@ function App() {
           />
           <FaSearch
             title="click me to search"
-            className="icon text-2xl absolute right-0 m-8"
+            className="icon text-2xl"
             onClick={() => {
               city.length > 0
                 ? searchCity()
@@ -192,6 +192,12 @@ function App() {
                     "No city has been entered yet");
             }}
           />
+          <button
+            className="whitespace-nowrap p-2 rounded-md bg-gray-400"
+            onClick={locationCoords}
+          >
+            Your Location
+          </button>
         </div>
         <strong className="text-xl text-red-600" ref={searcherrorRef}></strong>
       </article>
