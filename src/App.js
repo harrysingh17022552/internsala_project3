@@ -24,6 +24,7 @@ function App() {
   const [Details, setDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const errorRef = useRef(null);
+  const searcherrorRef = useRef(null);
   const showDetail = (e, item) => {
     e.target.classList.remove("animate-bounce");
     setShowDetails(true);
@@ -108,8 +109,13 @@ function App() {
       <p ref={errorRef} className="text-red-600 text-4xl"></p>
     </section>
   ) : (
-    <section className="min-w-screen flex flex-wrap flex-col sm:flex-row gap-10 p-4 box-border text-black">
-      <article className="flex justify-center items-center w-full">
+    <section
+      className={`min-w-screen min-h-screen flex flex-wrap flex-col sm:flex-row gap-10 p-4 box-border text-black`}
+    >
+      <h1 className="text-3xl sm:text-4xl md:text-5xl text-blue-800 text-center basis-full">
+        Weather Forecast
+      </h1>
+      <article className="flex flex-col justify-center items-center w-full">
         <div className="relative w-[98%] sm:w-[80%] md:w-[50%] flex items-center">
           <input
             value={city}
@@ -121,12 +127,19 @@ function App() {
             onChange={(e) => setCity(e.target.value)}
           />
           <FaSearch
+            title="click me to search"
             className="icon text-2xl absolute right-0 m-8"
-            onClick={searchCity}
+            onClick={() => {
+              city.length > 0
+                ? searchCity()
+                : (searcherrorRef.current.textContent =
+                    "No city has been entered yet");
+            }}
           />
         </div>
+        <strong className="text-xl text-red-600" ref={searcherrorRef}></strong>
       </article>
-      <article className="flex flex-col gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
+      <article className="flex flex-col bg-white gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
         <article className="flex justify-between items-center">
           <img
             src={
@@ -139,7 +152,7 @@ function App() {
             alt={weatherData.currentConditions.icon}
             className="w-20 sm:w-40 rounded-lg"
           />
-          <div className="flex gap-4">
+          <div className="flex flex-wrap md:flex-nowrap gap-4 justify-center">
             {tempUnit === "fahrenheit" ? (
               <h1 className="text-5xl after:content-['°F']">
                 {Math.ceil(weatherData.currentConditions.temp)}
@@ -158,10 +171,12 @@ function App() {
                 onClick={(e) => {
                   if (tempUnit === "fahrenheit") {
                     e.currentTarget.classList.add("translate-x-[130%]");
+                    e.currentTarget.parentElement.style.background = "gray";
                     e.currentTarget.textContent = "F";
                     setTempUnit("celsius");
                   } else {
                     e.currentTarget.classList.remove("translate-x-[130%]");
+                    e.currentTarget.parentElement.style.background = "black";
                     e.currentTarget.textContent = "C";
                     setTempUnit("fahrenheit");
                   }
@@ -183,7 +198,7 @@ function App() {
           </div>
         </article>
       </article>
-      <article className="flex flex-col gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
+      <article className="flex flex-col bg-white gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
         <article className="flex flex-nowrap justify-between items-center grow">
           <h1>TODAY</h1>
           <IoIosRefresh
@@ -253,7 +268,7 @@ function App() {
           </article>
         </article>
       </article>
-      <article className="flex flex-col gap-12 p-4 rounded-3xl border-2 basis-full overflow-scroll noscrollbar">
+      <article className="flex flex-col gap-12 bg-white p-4 rounded-3xl border-2 basis-full overflow-scroll noscrollbar">
         <article className="flex flex-nowrap justify-between items-center grow">
           <h1>Next 4 Days Forecast</h1>
           <IoIosRefresh

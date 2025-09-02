@@ -12,6 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   word-wrap: break-word;
   font-family: sans-serif;
+  background-color: gray;
 }
 body::-webkit-scrollbar {
   width: 0;
