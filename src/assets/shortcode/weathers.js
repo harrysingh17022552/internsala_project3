@@ -14,6 +14,15 @@ import { TbCloudSnow } from "react-icons/tb";
 import { IoIosPartlySunny } from "react-icons/io";
 import { IoIosThunderstorm } from "react-icons/io";
 import { RiWindyFill } from "react-icons/ri";
+import rain_bg from "../images/rain_bg.jpg";
+import sunny_bg from "../images/sunny_bg.jpg";
+import cloudy_bg from "../images/cloudy_bg.jpg";
+import cold_bg from "../images/cold_bg.jpg";
+import fog_bg from "../images/fog_bg.jpg";
+import snow_bg from "../images/snow_bg.jpg";
+import thunder_bg from "../images/thunder_bg.jpg";
+import wind_bg from "../images/wind_bg.jpg";
+import shower_bg from "../images/shower_bg.jpg";
 export const weatherList = () => {
   const list = [
     {
@@ -22,6 +31,7 @@ export const weatherList = () => {
       image: cloudy,
       icon: LuCloudy,
       classname: "text-4xl text-blue-200",
+      bg: cloudy_bg,
     },
     {
       id: 2,
@@ -29,6 +39,7 @@ export const weatherList = () => {
       image: cold,
       icon: MdSevereCold,
       classname: "text-4xl text-blue-200",
+      bg: cold_bg,
     },
     {
       id: 3,
@@ -36,6 +47,7 @@ export const weatherList = () => {
       image: fog,
       icon: MdFoggy,
       classname: "text-4xl text-gray-300",
+      bg: fog_bg,
     },
     {
       id: 4,
@@ -43,6 +55,7 @@ export const weatherList = () => {
       image: rain,
       icon: IoMdRainy,
       classname: "text-4xl text-blue-300",
+      bg: rain_bg,
     },
     {
       id: 5,
@@ -50,6 +63,7 @@ export const weatherList = () => {
       image: snow,
       icon: TbCloudSnow,
       classname: "text-4xl text-gray-200",
+      bg: snow_bg,
     },
     {
       id: 6,
@@ -57,6 +71,7 @@ export const weatherList = () => {
       image: sunny,
       icon: IoIosPartlySunny,
       classname: "text-4xl text-yellow-300",
+      bg: sunny_bg,
     },
     {
       id: 7,
@@ -64,6 +79,7 @@ export const weatherList = () => {
       image: thunderstorm,
       icon: IoIosThunderstorm,
       classname: "text-4xl text-gray-400",
+      bg: thunder_bg,
     },
     {
       id: 8,
@@ -71,6 +87,7 @@ export const weatherList = () => {
       image: wind,
       icon: RiWindyFill,
       classname: "text-4xl text-gray-200",
+      bg: wind_bg,
     },
     {
       id: 9,
@@ -78,6 +95,7 @@ export const weatherList = () => {
       image: rain,
       icon: IoMdRainy,
       classname: "text-4xl text-blue-300",
+      bg: shower_bg,
     },
   ];
   return list;

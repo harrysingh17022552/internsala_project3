@@ -156,7 +156,15 @@ function App() {
     }
     Location();
   };
-
+  const setImage = () => {
+    const component = weatherList().filter((item) =>
+      weatherData.currentConditions.icon
+        .toLowerCase()
+        .includes(item.name.toLowerCase())
+    );
+    document.body.style.backgroundImage = `url(${component[0].bg})`;
+    return component[0].image;
+  };
   useEffect(() => {
     getLocation();
     const localData = sessionStorage.getItem("searchItem");
@@ -200,7 +208,7 @@ function App() {
               type="search"
               name="search"
               id="search"
-              className="w-full p-2 rounded-md text-center border-2 grow"
+              className="w-full p-2 rounded-md text-center border-2 grow bg-white opacity-90"
               autoComplete="off"
               placeholder="Enter City Name here..."
               onChange={(e) => setCity(e.target.value)}
@@ -261,16 +269,10 @@ function App() {
         </div>
         <strong className="text-xl text-red-800" ref={searcherrorRef}></strong>
       </article>
-      <article className="flex flex-col bg-white gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
+      <article className="flex flex-col bg-white opacity-90 gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
         <article className="flex justify-between items-center">
           <img
-            src={
-              weatherList().filter((item) =>
-                weatherData.currentConditions.icon
-                  .toLowerCase()
-                  .includes(item.name.toLowerCase())
-              )[0].image
-            }
+            src={setImage()}
             alt={weatherData.currentConditions.icon}
             className="w-20 sm:w-40 rounded-lg"
           />
@@ -323,7 +325,7 @@ function App() {
           </div>
         </article>
       </article>
-      <article className="flex flex-col bg-white gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
+      <article className="flex flex-col bg-white opacity-90 gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
         <article className="flex flex-nowrap justify-between items-center grow">
           <h1>TODAY</h1>
           <IoIosRefresh
@@ -393,7 +395,7 @@ function App() {
           </article>
         </article>
       </article>
-      <article className="flex flex-col gap-12 bg-white p-4 rounded-3xl border-2 basis-full overflow-scroll noscrollbar">
+      <article className="flex flex-col gap-12 bg-white opacity-90 p-4 rounded-3xl border-2 basis-full overflow-scroll noscrollbar">
         <article className="flex flex-nowrap justify-between items-center grow">
           <h1>Next 4 Days Forecast</h1>
           <IoIosRefresh

@@ -13,6 +13,8 @@ body {
   word-wrap: break-word;
   font-family: sans-serif;
   background-color: gray;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 body::-webkit-scrollbar {
   width: 0;
