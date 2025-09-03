@@ -23,10 +23,12 @@ function App() {
   const [showDetails, setShowDetails] = useState(false);
   const [Details, setDetails] = useState({});
   const [loading, setLoading] = useState(true);
+  const [searchItem, setSearchItem] = useState([]);
+  const [showSearch, setShowSearch] = useState(false);
   const errorRef = useRef(null);
   const searcherrorRef = useRef(null);
   const showDetail = (e, item) => {
-    e.target.classList.remove("animate-bounce");
+    e.currentTarget.classList.remove("animate-bounce");
     setShowDetails(true);
     setDetails(item);
   };
@@ -46,6 +48,12 @@ function App() {
         { method: "GET", headers: { "content-type": "application/json" } }
       );
       if (response.ok) {
+        setSearchItem([
+          ...searchItem.filter(
+            (inthere) => inthere.toLowerCase() !== city.toLowerCase()
+          ),
+          city.toLowerCase(),
+        ]);
         const data = await response.json();
         setWeatherData(data);
         setTimeout(() => {
@@ -147,9 +155,18 @@ function App() {
     }
     Location();
   };
+
   useEffect(() => {
     getLocation();
+    const localData = sessionStorage.getItem("searchItem");
+    if (JSON.parse(localData).length > 0) {
+      setSearchItem(JSON.parse(localData));
+    }
   }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("searchItem", JSON.stringify(searchItem));
+  }, [searchItem]);
 
   useEffect(() => {
     if (coordinates?.latitude && coordinates?.longitude) {
@@ -162,26 +179,68 @@ function App() {
         <strong className="text-xl md:text-4xl">Loading</strong>
         <span className="loarder md:scale-150"></span>
       </div>
-      <p ref={errorRef} className="text-red-600 text-center md:text-2xl"></p>
+      <p ref={errorRef} className="text-red-800 text-center md:text-2xl"></p>
     </section>
   ) : (
     <section
       className={`max-w-screen min-h-screen flex flex-wrap flex-col sm:flex-row p-2 gap-10 box-border text-black`}
     >
-      <h1 className="text-3xl sm:text-4xl md:text-5xl text-blue-800 text-center basis-full">
+      <h1 className="times text-3xl sm:text-4xl md:text-5xl text-blue-800 text-center basis-full">
         Weather Forecast
       </h1>
       <article className="flex flex-col justify-center items-center w-full">
-        <div className="relative w-[98%] sm:w-[80%] md:w-[50%] flex items-center gap-4">
-          <input
-            value={city}
-            type="search"
-            name="search"
-            id="search"
-            className="w-full p-2 rounded-md text-center border-2"
-            placeholder="Enter City Name here..."
-            onChange={(e) => setCity(e.target.value)}
-          />
+        <div className="relative w-[98%] sm:w-[80%] md:w-[50%] flex items-center justify-center gap-4">
+          <div
+            className="relative flex flex-col items-center grow"
+            onMouseLeave={() => setShowSearch(false)}
+          >
+            <input
+              value={city}
+              type="search"
+              name="search"
+              id="search"
+              className="w-full p-2 rounded-md text-center border-2 grow"
+              autoComplete="off"
+              placeholder="Enter City Name here..."
+              onChange={(e) => setCity(e.target.value)}
+              onClick={() => setShowSearch(true)}
+            />
+            {searchItem.length > 0 && showSearch && (
+              <ul className="absolute flex flex-col justify-center items-center w-full rounded-b-md mt-10 bg-gray-400 z-10">
+                {searchItem.map((item, index) => (
+                  <div
+                    key={`searchItem/${index}`}
+                    className="flex items-center hover:bg-gray-500 w-full p-4"
+                  >
+                    <li
+                      className="w-full"
+                      onClick={() => {
+                        setCity(item);
+                        setShowSearch(false);
+                      }}
+                    >
+                      {item}
+                    </li>
+                    <ImCross
+                      title="remove from history"
+                      className="cursor-pointer absolute text-red-800 text-xs right-0 mr-4"
+                      onClick={(e) => {
+                        e.currentTarget.classList.add("animate-spin");
+                        setTimeout(() => {
+                          setSearchItem(
+                            searchItem.filter(
+                              (inthere) =>
+                                inthere.toLowerCase() !== item.toLowerCase()
+                            )
+                          );
+                        }, 1000);
+                      }}
+                    />
+                  </div>
+                ))}
+              </ul>
+            )}
+          </div>
           <FaSearch
             title="click me to search"
             className="icon text-2xl"
@@ -199,7 +258,7 @@ function App() {
             Your Location
           </button>
         </div>
-        <strong className="text-xl text-red-600" ref={searcherrorRef}></strong>
+        <strong className="text-xl text-red-800" ref={searcherrorRef}></strong>
       </article>
       <article className="flex flex-col bg-white gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
         <article className="flex justify-between items-center">
@@ -229,7 +288,7 @@ function App() {
               title="Toggle Temp Unit"
             >
               <p
-                className="bg-white aspect-square rounded-full w-6 transition-all cursor-pointer text-center text-red-600"
+                className="bg-white aspect-square rounded-full w-6 transition-all cursor-pointer text-center text-red-800"
                 onClick={(e) => {
                   if (tempUnit === "fahrenheit") {
                     e.currentTarget.classList.add("translate-x-[130%]");
@@ -250,7 +309,7 @@ function App() {
           </div>
         </article>
         <article className="flex justify-between items-center">
-          <div className="flex flex-col gap-2 whitespace-nowrap">
+          <div className="flex flex-col gap-2">
             <strong>
               {weatherData.resolvedAddress.toUpperCase()} (
               {weatherData.timezone})
@@ -442,7 +501,7 @@ function App() {
               </article>
             </article>
             <ImCross
-              className="absolute top-0 right-0 text-xl text-red-500 cursor-pointer"
+              className="absolute top-0 right-0 text-xl text-red-800 cursor-pointer"
               onClick={(e) => {
                 e.currentTarget.classList.add("animate-spin");
                 setTimeout(() => {

@@ -18,6 +18,12 @@ body::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
+.times {
+  font-family: "Times New Roman", Times, serif;
+}
+input:focus {
+  outline: none;
+}
 h1 {
   font-size: large;
   font-weight: bold;
