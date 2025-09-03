@@ -192,7 +192,10 @@ function App() {
   useEffect(() => {
     getLocation();
     const localData = sessionStorage.getItem("searchItem");
-    if (JSON.parse(localData).length > 0) {
+    if (!localData) {
+      setSearchItem([]);
+    }
+    if (localData && JSON.parse(localData).length > 0) {
       setSearchItem(JSON.parse(localData));
     }
   }, []);
@@ -224,7 +227,7 @@ function App() {
       className={`max-w-screen min-h-screen flex flex-wrap flex-col sm:flex-row p-2 gap-10 box-border text-black`}
     >
       {/* main heading for this website */}
-      <h1 className="times text-3xl sm:text-4xl md:text-5xl text-blue-800 text-center basis-full">
+      <h1 className="times text-3xl sm:text-4xl md:text-5xl text-blue-800 mix-blend-difference text-center basis-full invert">
         Weather Forecast
       </h1>
       {/* this article is UI for user to search weather for different cities and their current location */}
@@ -246,7 +249,7 @@ function App() {
               onClick={() => setShowSearch(true)}
             />
             {searchItem.length > 0 && showSearch && (
-              <ul className="absolute flex flex-col justify-center items-center w-full rounded-b-md mt-10 bg-gray-400 z-10">
+              <ul className="absolute flex flex-col justify-center items-center w-full rounded-b-xl mt-10 bg-gray-400 z-10 max-h-[300px] overflow-y-scroll noscrollbar">
                 {searchItem.map((item, index) => (
                   <div
                     key={`searchItem/${index}`}
