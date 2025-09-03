@@ -1,4 +1,5 @@
 export const Cities = () => {
+  //list of every state in India, it might be used in future in this website
   const list = [
     "Adilabad",
     "Anantapur",

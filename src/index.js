@@ -5,9 +5,10 @@ import "./index.css";
 import App from "./App";
 
 const router = createBrowserRouter([
+  //routing App component initially
   {
     path: "/",
-    element: <App />
+    element: <App />,
   },
 ]);
 

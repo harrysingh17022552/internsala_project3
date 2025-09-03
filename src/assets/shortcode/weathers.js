@@ -24,6 +24,7 @@ import thunder_bg from "../images/thunder_bg.jpg";
 import wind_bg from "../images/wind_bg.jpg";
 import shower_bg from "../images/shower_bg.jpg";
 export const weatherList = () => {
+  //A list that contain information about weather, type of weather, its image and styling w.r.t that weather. Keeping object of each weather very helpful to render information when weather changes
   const list = [
     {
       id: 1,

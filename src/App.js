@@ -13,32 +13,49 @@ import { ImCross } from "react-icons/im";
 import { FaSearch } from "react-icons/fa";
 import { GoAlertFill } from "react-icons/go";
 import { useEffect, useRef, useState } from "react";
+//imported every necessary things that will be needed on this project
 function App() {
+  //the main data, that will render on every visit or on city changes, initially it will load data from data.js, which is dummy data
   const [weatherData, setWeatherData] = useState(data());
-  const [tempUnit, setTempUnit] = useState("fahrenheit"); //fahrenheit or celsius
+  // this state will toggle between fahrenheit or celsius, initially it is fahrenheit, because API will return temp in fahrenheit.
+  const [tempUnit, setTempUnit] = useState("fahrenheit");
+  // this state will manage input field, where user will type city to get weather
   const [city, setCity] = useState("");
+  //this state will be used to store coordinate of user location when they visit this website.
   const [coordinates, setCoordinates] = useState({
     latitude: 0,
     longitude: 0,
   });
+  //this state will manage the container of next 4 days forecast info
   const [showDetails, setShowDetails] = useState(false);
+  //this state will store the info of forecast from 4 next forecasts, when user want to see them
   const [Details, setDetails] = useState({});
+  //this state will control loading of this website
   const [loading, setLoading] = useState(true);
+  //this state will store the every cities user search to get weather
   const [searchItem, setSearchItem] = useState([]);
+  //manage the recent searches when user click search input field or move out of input field
   const [showSearch, setShowSearch] = useState(false);
+  //this Ref will be mostly used when their will be any error from API side
   const errorRef = useRef(null);
+  //this Ref will manage search input field error
   const searcherrorRef = useRef(null);
+
+  //this function will render particular day weather forecast, so it could visible to user, when the click down arrow button
   const showDetail = (e, item) => {
     e.currentTarget.classList.remove("animate-bounce");
     setShowDetails(true);
     setDetails(item);
   };
+  //this function will set error message, when their is any error
   const showErrorMessage = (message) => {
     errorRef.current.textContent = message;
     setTimeout(() => {
       window.location.reload();
     }, 2000);
   };
+
+  //one of the main function : this function only work when user enter city to see weather and click search icon, it makes API calls and receive data if their is no error, other wise error message will be print using showErrorMessage function, try and catch is used to get other error than API if any. Here API takes city as a parameter.
   const searchCity = async () => {
     setLoading(true);
     try {
@@ -92,6 +109,7 @@ function App() {
       showErrorMessage(error);
     }
   };
+  //one of the main function : this function only work when user visit this website or refresh the page, it makes API calls and receive data if their is no error, other wise error message will be print using showErrorMessage function, try and catch is used to get other error than API if any. Here API takes coordinates as a parameter.
   const locationCoords = async () => {
     try {
       const response = await fetch(
@@ -135,6 +153,8 @@ function App() {
       errorRef.current.textContent = error;
     }
   };
+
+  //this fuction is normal function, that is used to get user coordinates after their permission
   const getLocation = async () => {
     function Location() {
       if (navigator.geolocation) {
@@ -156,6 +176,8 @@ function App() {
     }
     Location();
   };
+
+  //this function simply return the image from their particular weather and change the body background image
   const setImage = () => {
     const component = weatherList().filter((item) =>
       weatherData.currentConditions.icon
@@ -165,6 +187,8 @@ function App() {
     document.body.style.backgroundImage = `url(${component[0].bg})`;
     return component[0].image;
   };
+
+  //this useEffect will work one time when user visit website, this will get user coordinate and check wheather user have their recent city searches in their session storage or not, if it is their then it will update the recent search list
   useEffect(() => {
     getLocation();
     const localData = sessionStorage.getItem("searchItem");
@@ -173,30 +197,37 @@ function App() {
     }
   }, []);
 
+  //this useEffect will work when their is any changes in recent search list, either it is delete or update, it will update or create the list in session storage
   useEffect(() => {
     sessionStorage.setItem("searchItem", JSON.stringify(searchItem));
   }, [searchItem]);
 
+  //this useEffect will work when their is any changes in user current coordinates, this is mostly triggers when user visit website and getLocation updates the coordinates
   useEffect(() => {
     if (coordinates?.latitude && coordinates?.longitude) {
       locationCoords();
     }
   }, [coordinates]);
   return loading ? (
+    //loading container, loads till data fetch and store in state
     <section className="flex flex-col gap-8 items-center w-screen h-screen justify-center">
       <div className="flex justify-center items-center">
         <strong className="text-xl md:text-4xl">Loading</strong>
         <span className="loarder md:scale-150"></span>
       </div>
+      {/* Takes error message from API and display here */}
       <p ref={errorRef} className="text-red-800 text-center md:text-2xl"></p>
     </section>
   ) : (
+    //main section for this page
     <section
       className={`max-w-screen min-h-screen flex flex-wrap flex-col sm:flex-row p-2 gap-10 box-border text-black`}
     >
+      {/* main heading for this website */}
       <h1 className="times text-3xl sm:text-4xl md:text-5xl text-blue-800 text-center basis-full">
         Weather Forecast
       </h1>
+      {/* this article is UI for user to search weather for different cities and their current location */}
       <article className="flex flex-col justify-center items-center w-full">
         <div className="relative w-[98%] sm:w-[80%] md:w-[50%] flex items-center justify-center gap-4">
           <div
@@ -267,9 +298,12 @@ function App() {
             Your Location
           </button>
         </div>
+        {/* any error from search field side */}
         <strong className="text-xl text-red-800" ref={searcherrorRef}></strong>
       </article>
+      {/* this article gives basic overview of todays weather, temp , current conditions and your location */}
       <article className="flex flex-col bg-white opacity-90 gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
+        {/* includes weather GIF, todays temp and toogle between fahrenheit and celcius also it include the max temp alert*/}
         <article className="flex justify-between items-center">
           <img
             src={setImage()}
@@ -314,6 +348,7 @@ function App() {
             </div>
           </div>
         </article>
+        {/* includes todays weather description, your location info */}
         <article className="flex justify-between items-center">
           <div className="flex flex-col gap-2">
             <strong>
@@ -325,6 +360,7 @@ function App() {
           </div>
         </article>
       </article>
+      {/*this article gives brief overview of todays weather like wind flow, humidity, cloud, sun rise time, sun set time,temp, their is refresh button that work on condition and that condition that when their is no input it will refresh weather for its current location otherwise it will refresh weather for the city entered in search input field.*/}
       <article className="flex flex-col bg-white opacity-90 gap-4 p-4 rounded-3xl border-2 sm:w-[calc(50%-40px)] grow">
         <article className="flex flex-nowrap justify-between items-center grow">
           <h1>TODAY</h1>
@@ -395,6 +431,7 @@ function App() {
           </article>
         </article>
       </article>
+      {/* this article will list next 4 days weather forecast, initially with minimum info like date, weathre icon and temp, to show details info user have to click down arrow functon that will make visible the container that will container detail info of weather like wind flow, humidity, cloud, sun rise time, sun set time,temp for the respective day to see other day forecast they have to click their respective down arrow. Here their is also a refesh button it will work same as above refresh button*/}
       <article className="flex flex-col gap-12 bg-white opacity-90 p-4 rounded-3xl border-2 basis-full overflow-scroll noscrollbar">
         <article className="flex flex-nowrap justify-between items-center grow">
           <h1>Next 4 Days Forecast</h1>
