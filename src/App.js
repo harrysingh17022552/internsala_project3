@@ -11,6 +11,7 @@ import { weatherList } from "./assets/shortcode/weathers";
 import { FaChevronDown } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { FaSearch } from "react-icons/fa";
+import { GoAlertFill } from "react-icons/go";
 import { useEffect, useRef, useState } from "react";
 function App() {
   const [weatherData, setWeatherData] = useState(data());
@@ -282,6 +283,9 @@ function App() {
               <h1 className="text-5xl after:content-['°C']">
                 {Math.ceil(((weatherData.currentConditions.temp - 32) * 5) / 9)}
               </h1>
+            )}
+            {weatherData.currentConditions.temp >= 104 && (
+              <GoAlertFill className="text-2xl self-center text-red-600 animate-pulse" />
             )}
             <div
               className="bg-black w-14 h-7 self-center rounded-full flex items-center transition-all"
