@@ -32,5 +32,9 @@ users - App.js ---> line 70 - 108
 7. Their is Toggle button to switch between Temperature Unit's.
 8. Initially Next 4 Days Forecast is represented in short form with basic details like date,icon and temperature, their is down arrow for each day forecast to see details of that day forecast.
 9. Their is refresh button, that simply works on logic, that when search input field is empty it will refresh user current location and when their is city entered in input field, it will refresh weather condition for that city.
+
 # Git Logs
 Their i separate file for logs named as "git-log-txt"
+
+# Preview Project at
+https://internsala-project3.vercel.app/
