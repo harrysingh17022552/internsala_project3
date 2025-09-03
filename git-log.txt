@@ -1,0 +1,111 @@
+commit 73679781f7d086cd16749a8482e411abf619f27d
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Wed Sep 3 17:29:20 2025 +0530
+
+    separated my env key from App.js
+
+commit 336d94224e266ce1c4e475f1960afbe898095a6a
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Wed Sep 3 16:53:35 2025 +0530
+
+    solved issue of session storage, main heading inverted color, giving fix height to recent search list
+
+commit 3986f723a993ed2fe8074717349a765e2b02e676
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Wed Sep 3 16:19:59 2025 +0530
+
+    Commented every necessary things and added favicon
+
+commit 94face6f1caa287627badf41213588d18befdd85
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Wed Sep 3 14:47:37 2025 +0530
+
+    Dynamically change bg according to weather
+
+commit 3c69a6cabb6880aecf2a65853962894c197011fc
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Wed Sep 3 13:41:01 2025 +0530
+
+    Hot temperature Alert
+    
+    custom weather alerts for extreme temperatures
+
+commit 645fc2bb3f66d5bedefc2f733fef9d40a2a8b475
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Wed Sep 3 13:28:10 2025 +0530
+
+    Recent Search Dropdown && Session storage
+    
+    when user successfully search weather for city its input value will ne stored in list of cities in both state and session storage, after that this recent search will be list as a recent search dropdown
+
+commit 65cf4936acb907c2767ea4535f75a476054e9d10
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Wed Sep 3 00:57:45 2025 +0530
+
+    Separated Current location and search location
+
+commit 0e8c4373862e247afd8f4829b5dcb07fe49907e3
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Wed Sep 3 00:22:51 2025 +0530
+
+    covers every error from API provider side
+
+commit f263dcb6fe0e8d4fda21bbea9bcfb610e64c5f8f
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Tue Sep 2 23:36:26 2025 +0530
+
+    added empty string search error
+
+commit 21b2617c52dc5d61683cf4cfd90e1a229853cfa9
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Tue Sep 2 22:36:40 2025 +0530
+
+    Added new feature
+    
+    when user reloads page, it will fetch its current location and give weather condition according to its latitude and longitude.
+
+commit 892154a4f167cd084fd1f7f7be7549e22cea2dd5
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Tue Sep 2 22:34:44 2025 +0530
+
+    replace them
+
+commit 3c9665a8c6091d38647d94df8c396ec51f941251
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Tue Sep 2 22:34:14 2025 +0530
+
+    renaming name according to data API returns
+
+commit 6cdbee29ffd46849772cc04eca2fc2e7fb363d9b
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Tue Sep 2 09:52:23 2025 +0530
+
+    Added core functionality and designed UI
+    
+    Till now what done:
+    1. fetch weather data through API store it in state.
+    2. Distribute this data through html component using high order function.
+    3. Map next 4 days weather condition in UI and show their weather detail while clicking them.
+    4. Search functionality, that shows weather condition for specific city, currently it will work well for India.
+
+commit e07b7a29aec26930dcd25f9858350ca18017a107
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Tue Sep 2 00:11:08 2025 +0530
+
+    GIF and IMP data
+    
+    Collected required GIF and created IMP function that will be use here repeatly.
+
+commit 2d1be330c1eaf9d2608a7e700f90419e3e3f362d
+Author: Harish Nigam <harrysingh17022552@gmail.com>
+Date:   Mon Sep 1 22:18:53 2025 +0530
+
+    Basic Setup
+    
+    Installing node packages and tailwind
+
+commit 1b57d3ecdb899d32134f9700331719dd99232806
+Author: harrysingh17022552 <harrysingh17022552@gmail.com>
+Date:   Mon Sep 1 22:07:22 2025 +0530
+
+    Initial commit
