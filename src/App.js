@@ -62,7 +62,9 @@ function App() {
       const response = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}/${getDate()}/${getDate(
           3
-        )}?unitGroup=us&key=SNVNZ8F7LF75WRMNAG6C7F7AS&contentType=json`,
+        )}?unitGroup=us&key=${
+          process.env.REACT_APP_VISUAL_CROSSING_API_KEY
+        }&contentType=json`,
         { method: "GET", headers: { "content-type": "application/json" } }
       );
       if (response.ok) {
@@ -117,7 +119,9 @@ function App() {
           coordinates.latitude
         }%2C${coordinates.longitude}/${getDate()}/${getDate(
           3
-        )}?unitGroup=us&key=SNVNZ8F7LF75WRMNAG6C7F7AS&contentType=json`,
+        )}?unitGroup=us&key=${
+          process.env.REACT_APP_VISUAL_CROSSING_API_KEY
+        }&contentType=json`,
         { method: "GET", headers: { "content-type": "application/json" } }
       );
       if (response.ok) {
@@ -492,7 +496,7 @@ function App() {
           ))}
         </article>
         {showDetails && (
-          <article className="relative flex flex-col gap-4 p-4 rounded-3xl border-2 sm:w-[calc(75%-40px)] self-center grow">
+          <article className="relative flex flex-col gap-4 p-4 rounded-3xl border-2 sm:w-[calc(75%-40px)] self-center bg-black text-white grow">
             <article className="flex flex-col flex-nowrap justify-center items-center grow gap-4">
               <h1 className="text-center text-3xl animate-pulse">
                 {Details.conditions}
